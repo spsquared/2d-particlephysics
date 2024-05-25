@@ -12,7 +12,9 @@ const ctx = (canvas as HTMLCanvasElement).getContext('bitmaprenderer');
 
 async function index_main() {
     // define workers
-    const drawWorker = new Worker('./draw.ts');
+    const drawWorker = new Worker(new URL('./draw.ts', import.meta.url), {
+        type: 'module'
+    });
     const drawCanvas = new OffscreenCanvas(1, 1);
     await Promise.all([new Promise((resolve) => {
         drawWorker.postMessage(drawCanvas, [drawCanvas]);
